@@ -4,7 +4,7 @@
   "description": "The first one",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "electron ."
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/perssondan/electron1/issues"
   },
-  "homepage": "https://github.com/perssondan/electron1#readme"
+  "homepage": "https://github.com/perssondan/electron1#readme",
+  "dependencies": {
+    "electron": "^1.7.12"
+  }
 }
