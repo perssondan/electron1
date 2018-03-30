@@ -7,8 +7,15 @@ const {app, BrowserWindow, Menu} = electron; // Grab app and BrowserWindow from 
 let mainWindow; // Create variable the mainWindow
 let addWindow; // Create variable the addWindow
 
-// Listen for app to be ready
-app.on('ready', function (){
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createMainWindow);
+// Quit when all windows are closed.
+app.on('window-all-closed', windowAllClosed);
+app.on('activate', activeWindow);
+
+function createMainWindow() {
     // Create new window
     mainWindow = new BrowserWindow({});
     // Load html into window
@@ -27,7 +34,7 @@ app.on('ready', function (){
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     // Insert menu
     Menu.setApplicationMenu(mainMenu);
-});
+}
 
 // Handle create add window
 function createAddWindow() {
@@ -46,6 +53,22 @@ function createAddWindow() {
     addWindow.on('close', function() {
         addWindow = null;
     });
+}
+
+function windowAllClosed() {
+    // On OS X it is common for applications and their menu bar
+    // to stay active until the user quits explicitly with Cmd + Q
+    if (process.platform !== 'darwin') {
+        app.quit();
+      }
+}
+
+function activeWindow() {
+    // On OS X it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createMainWindow()
+  }
 }
 
 // Create menu template
